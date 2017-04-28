@@ -4,13 +4,14 @@
 #include <iostream>
 using namespace std;
 
-class Cat {
+class Person {
 private:
-  bool happy;
+  string name;
+  int age;
 public:
-  void speak();
-  Cat();
-  ~Cat();
+  string toString();
+  Person(); //Constructor
+  Person(string name, int age);
 
 };
 

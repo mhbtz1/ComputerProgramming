@@ -1,20 +1,21 @@
-#include <iostream>
+#include <sstream>
 #include "Class1.h"
 
 using namespace std;
-Cat::Cat(){
-  cout << "Cat object instantiated" << endl;
+Person::Person(): name(" "), age(0){
 
-  happy = true;
 }
 
-Cat::~Cat(){
-  cout << "Cat object eliminated" << endl;
+Person::Person(string name, int age): name(name), age(age){
 }
-void Cat::speak(){
-  if(happy){
-    cout << "Meow" << endl;
-  } else {
-    cout << "Ssss" << endl;
-  }
+
+string Person::toString(){
+  stringstream ss;
+  ss << "Name";
+  ss << name;
+  ss << "Age";
+  ss < age;
+
+  return ss.str();
+
 }

@@ -4,12 +4,12 @@
 using namespace std;
 
 int main(){
-  cout << "Starting program" << endl;
 
-  Cat jim;
-  jim.speak();
+  Person person2("Jeff", 30);
+  Person person3("Bob",42);
 
-  cout << "Ending program" << endl;
-  
+
+  cout << person2.toString() << endl;
+  cout << person3.toString() << endl;
   return 0;
 }

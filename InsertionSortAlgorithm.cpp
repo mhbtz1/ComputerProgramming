@@ -11,23 +11,24 @@ SECOND WHILE LOOP IS MET
 
 void InsertionAlgo(int ar[], int size);
 int main(){
-  int ar[] = {9,4,1,5,8,3,6,7}; //4,9,1,5,8,3,6,7
-  InsertionAlgo(ar, sizeof(ar)/sizeof(ar[0]));
+  int array1[] = {9,4,1,5,8,3,6,7}; //4,9,1,5,8,3,6,7
+  InsertionAlgo(array1, sizeof(array1)/sizeof(array1[0]));
 }
 
 void InsertionAlgo(int ar[], int size){
   swap(ar[0], ar[1]);
-    int a = 2;
-    while(a != size){
-      int i = 5;
+    int i = 2;
+    while(i != size){
       while(ar[i] < ar[i-1]){
           swap(ar[i], ar[i-1]);
-          i = i - 1;
+          if(ar[i] > ar[i-1] && ar[i] < ar[i+1]){
+            i += 1;
+          } else {
+            i = i - 1;
+          }
         }
-      a ++;
-    }
-    for(int i = 0; i < size; i++){
-      cout << ar[i] << endl;
-    }
+        i += 1;
+      }
+
 
   }

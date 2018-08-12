@@ -1,10 +1,10 @@
-//TernarySearch(COMPLETED)
 #include <iostream>
 #include <vector>
 #include <algorithm>
 
 using namespace std;
 
+//Searches for value in an array data structure by ternary methods
 
 int main(){
   cout << "Enter in an integer for evaluation" << endl;
@@ -12,7 +12,7 @@ int main(){
   int integer;
   cin >> integer;//Receives input from a.out
 
-  int ar[] = {2,4,9,5,7,1,13,22,6,10,12,15,27,30,20,52,34,8,16,23,99,123,67,75,96};
+  int ar[] = {2,4,9,5,7,1,13,22,6,10,12,15,27,30,20,52,34,8,16,23,99,123,67,75,96, 32, 28, 162, 56, 28, 92, 14, 35, 46, 76, 55, 89};
   vector<int> vectorVal (ar, ar + sizeof(ar)/sizeof(ar[0]));
   sort(vectorVal.begin(),vectorVal.end()); //1,2,4,5,6,7,8,9//,10,12,13,15,16,20,22,23//,27,30,34,52,67,75,99,123
 

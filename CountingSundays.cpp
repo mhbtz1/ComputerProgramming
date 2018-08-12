@@ -29,7 +29,7 @@ for(int yearAmt = 1900; yearAmt <= 2000; yearAmt++){
     }
   }
 
-cout << counterOfSundays << endl;
+cout << counterOfSundays - 2 << endl;
 
 
 

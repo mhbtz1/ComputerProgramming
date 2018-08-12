@@ -6,6 +6,7 @@ using namespace std;
 
 //Project Euler Problem 27: Quadratic Primes
 //ANSWER: -59231
+//Longest Prime Length( 71 primes)
 
 bool PrimalityDetector(int n);
 
@@ -17,7 +18,7 @@ int main(){
   vector<int> productVec;
 
   int abundantArbiter = 0;
-  for(int i = 1; i <= 1000; i++){
+  for(int i = 1; i <= 100; i++){
     for(int a = 1; a < i; a++){
       if(i % a == 0){
         abundantArbiter += a;
@@ -71,6 +72,7 @@ for(int i = 0; i < primeLength.size(); i++){
 }
 
 cout << productVec[val] << endl;
+cout << val << endl;
 
 
 

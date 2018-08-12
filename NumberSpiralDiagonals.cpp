@@ -9,7 +9,7 @@ int main(){
   int totalSum = 1;
   int additionVal = 1;
 
-  for(int i = 3; i <= 1001; i++){
+  for(int i = 3; i <= 5; i++){
     if(i % 2 != 0){
       while(counter <= 3){
         additionVal += sqrt(i * i) - 1;

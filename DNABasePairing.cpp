@@ -26,6 +26,6 @@ void DNAMutations(string a, string b){
       }
     }
     cout << "The number of noncomplementary pairs are: " << a.length() - counterofMutations << endl;//noncomplementary pairs
-    cout << "The sequence divergence of the given DNA is " << a.length()- counterofMutations << "/" << a.length()<< endl;
+    cout << "The sequence divergence of the given DNA is " << (a.length()- counterofMutations / a.length())<< endl;
 
 }

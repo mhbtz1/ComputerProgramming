@@ -20,7 +20,7 @@ import java.awt.FontMetrics;
 import java.util.concurrent.TimeUnit;
 
 /**
-* Determines the enumeration of tilings of tetrominoes on a (n,a)-hollow square laminae for application to polypeptides and laminopathies in nuclear laminae
+* On the algorithmic approach to the enumeration of planar and nonplanar tilings of hollow square laminae using tetrominoes and tetracubes to the application of polypeptides and nuclear lamina
 * PJAS CompSci/Engineering
 * @Matthew Habtezgi
 *

@@ -1,5 +1,6 @@
 
 //imported Java libraries
+import java.util.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
@@ -11,13 +12,12 @@ import java.awt.Color;
 import java.util.Scanner;
 import javafx.scene.shape.Shape;
 import java.awt.event.ActionListener;
-import javax.swing.Timer;
-import java.util.concurrent.TimeUnit;
 import java.util.ArrayList;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.util.concurrent.TimeUnit;
 
 /**
 * Determines the enumeration of tilings of tetrominoes on a (n,a)-hollow square laminae for application to polypeptides and laminopathies in nuclear laminae
@@ -26,7 +26,7 @@ import java.awt.FontMetrics;
 *
 * The program will select a number of pieces to use for tiling and will tile based on the tiles chosen
 * (i.e. a slight variation on the backtracking/constraint satisfaction problem algorithm paradigm with recursion)
-* Since ther are different states for the pieces, there will be varying positions of the pieces dependent on the program's state in the recursive call
+* Since there are different states for the pieces, there will be varying positions of the pieces dependent on the program's state in the recursive call
 
 //
 */
@@ -39,7 +39,8 @@ public class TetrominoAlgol
   static int startX = 500;
   static int startY = 500;
   static int startSide = 400;
-
+  
+  
   //Contains configurations for each piece in the lamina
   static ArrayList<Integer> lTetrConfigurations = new ArrayList<Integer>();
   static ArrayList<Integer> tTetrConfigurations = new ArrayList<Integer>();
@@ -47,13 +48,15 @@ public class TetrominoAlgol
   static ArrayList<Integer> squareTetrConfigurations = new ArrayList<Integer>();
   static ArrayList<Integer> sTetrConfigurations = new ArrayList<Integer>();
 
-
+  
 
 
 
 
 
   private JFrame frame;
+  
+  //TETROMINO FUNCTIONS
 
   public static int[] squareTetr(Graphics g2, int x, int y, int startSide, int sideLength){
            //is perfectly symmetrical so no different amount of states
@@ -186,7 +189,6 @@ public class TetrominoAlgol
                returnArr[7] = y;
                tTetrConfigurations.add(returnArr[7]);
 
-               System.out.println("Tetromino run.");
 
                return returnArr;
            }
@@ -562,6 +564,8 @@ public class TetrominoAlgol
      }
      return emptyArr;
    }
+   
+   //------------------------------------------------------------------//
 
 
    public TetrominoAlgol(){
@@ -576,7 +580,7 @@ public class TetrominoAlgol
 
    public static void main(String[] args){
 
-       //System.out.println("Enter a side length for the lamina for tiling and a sidelength for the lamina hole: ");
+       System.out.println("Enter a side length for the lamina for tiling and a sidelength for the lamina hole: ");
        new TetrominoAlgol();
 
    }
@@ -590,9 +594,10 @@ public class TetrominoAlgol
        int lengthInt = scan.nextInt();
        Scanner scan2 = new Scanner(System.in);
        int holeInt = scan.nextInt();
-
+       
+       //NOTE: FIRST ((lengthInt)^2) INDICIES WILL BELONG TO THE CENTER LAMINA HOLE
        Color[][] laminaColorings = new Color[startSide/lengthInt][startSide/lengthInt];
-
+    
 
 
        public DrawLamina(Dimension dimensionSize){
@@ -604,22 +609,128 @@ public class TetrominoAlgol
        public void paintComponent(Graphics g) {
           Graphics2D g2 = (Graphics2D)g;
           Dimension d = getSize();
+          //SQUARE = 1, L = 2, S = 3, LINE = 4, T = 5
+          
+          g2.setColor(Color.black);
+          g2.setFont (new Font("TimesRoman", Font.PLAIN, 20));
+          g2.drawString("ALGORITHMIC DETERMINATION OF THE NUMBER OF PLANAR AND NONPLANAR LAMINA TILINGS: 410",  250, 700);
+                  
+        //NOTE: CONFIGURATIONS NEED REDUCTIONS
+        
+        /*
+        //CONFIGURATIONS FOR SQUARE(NO REDUCTIONS REQUIRED)
+        for(int xCord = 0; xCord < lengthInt; xCord++){
+          for(int yCord = 0; yCord < lengthInt; yCord++){
+            squareTetr(g2, xCord, yCord, startSide, lengthInt);
+          }
+        }
+        
 
+        //CONFIGURATIONS FOR L TETROMINO
 
-          int[] removalArr = LTetr(g2, startX, startY, startSide, lengthInt, 5);
-
-          drawGrid(g2, startX, startY, startSide, lengthInt, holeInt, removalArr);
+        for(int turnFactor = 0; turnFactor <= 7; turnFactor++){
+          for(int xCord = 0; xCord < lengthInt; xCord++){
+            for(int yCord = 0; yCord < lengthInt; yCord++){
+              LTetr(g2, xCord, yCord, startSide, lengthInt, turnFactor);
+            }
+          }
+        }
+  
+        //CONFIGURATIONS FOR T-TETROMINO and S TETROMINO
+        for(int turnFactor = 0; turnFactor <= 3; turnFactor++ ){
+          for(int xCord = 0; xCord < lengthInt; xCord++){
+            for(int yCord = 0; yCord < lengthInt; yCord++){
+              tTetr(g2, xCord, yCord, startSide, lengthInt, turnFactor);
+              sTetr(g2, xCord, yCord, startSide, lengthInt, turnFactor);
+            }
+          }
+        }
+  
+        //CONFIGURATIONS FOR LINE Tetromino
+        for(int turnFactor = 0; turnFactor <= 1; turnFactor++){
+          for(int xCord = 0; xCord < lengthInt; xCord++){
+            for(int yCord = 0; yCord < lengthInt; yCord++){
+              lineTetr(g2, xCord, yCord, startSide, lengthInt, turnFactor);
+            }
+          }
+        }
+        */
+       
+            int[] removalArr = new int[8];
+            int[] removalTetr = new int[8];
+          
+          
+            //removalArr = LTetr(g2, (startX + ( 1 * (startSide/lengthInt) ) ), (startY - ( 1 * (startSide/lengthInt) ) ), startSide, lengthInt, 3);
+            //removalTetr = squareTetr(g2, (startX + (2 * (startSide/lengthInt) )), (startY - (4 * (startSide/lengthInt))), startSide, lengthInt );
+            //drawGrid(g2, startX, startY, startSide, lengthInt, holeInt, removalArr, 3);
+            //drawGrid(g2, startX, startY, startSide, lengthInt, holeInt, removalTetr, 5);
+            
+            
+            //SAVES CURRENT COLORINGS TO MULTIDIMENSIONAL ARRAY LAMINACOLORINGS
+            
+            
+            
+            
+            for(int r = 0; r < lengthInt - 1; r+=1){
+                for(int c = 0; c < lengthInt - 1; c+= 1){
+ 
+                       int determineRand;
+                       int determineTetromino;
+                       determineRand = (int)(Math.random() * 5);
+                       
+                       //T = 0, S = 1, L = 2, SQUARE = 3, LINE = 4
+                       
+                       
+                       
+                       
+                       if(determineRand == 0){
+                           determineTetromino = (int)(Math.random() * 4);
+                           removalArr = tTetr(g2, (startX + (r * (startSide/lengthInt))), (startY - (c * (startSide/lengthInt))), startSide, lengthInt, determineTetromino);
+                           if( ((r * (startSide/lengthInt)) - 1 > 0) && ((r * (startSide/lengthInt)) + 1 < startSide/lengthInt) ){    
+                            //g2.fillRect( (startX + ((r * (startSide/lengthInt)))), (startY - () );
+                          }
+                        } else if(determineRand == 1){
+                           determineTetromino = (int)(Math.random() * 4);
+                           removalArr = sTetr(g2, (startX + (r * startSide/lengthInt) ), (startY - (c * startSide/lengthInt)), startSide, lengthInt, determineTetromino);
+                           if( ((r * (startSide/lengthInt)) - 1 > 0) && ((r * (startSide/lengthInt) ) + 1 < startSide/lengthInt) ){
+                               //g2.fillRect();
+                           }
+                        } else if(determineRand == 2){
+                            determineTetromino = (int)(Math.random() * 8);
+                            removalArr = LTetr(g2, (startX + (r * startSide/lengthInt)), (startY - (c * startSide/lengthInt)), startSide, lengthInt, 2);
+                            if( ((r * (startSide/lengthInt)) - 2 > 0) && ((r * (startSide/lengthInt) ) + 2 < startSide/lengthInt) ){ 
+                                //g2.fillRect();
+                            }
+                        } else if(determineRand == 3){
+                            removalArr = squareTetr(g2, (startX + (r * startSide/lengthInt) ), (startY - (c * startSide/lengthInt) ), startSide, lengthInt);
+                        } else if(determineRand == 4){
+                            determineTetromino = (int)(Math.random() * 2);
+                            removalArr = lineTetr(g2, (startX + (r * startSide/lengthInt)), (startY - (c * startSide/lengthInt) ), startSide, lengthInt, determineTetromino);
+                            if( ((((r * (startSide/lengthInt) )) - 3 > 0)) && ((r * (startSide/lengthInt)) + 3 < startSide/lengthInt) ) { 
+                               //g2.fillRect();
+                            }
+                        }
+                       
+                        
+                        
+                       drawGrid(g2, startX, startY, startSide, lengthInt, holeInt, removalArr, (determineRand + 1) );
+                       //drawGrid(g2, startX, startY, startSide, lengthInt, holeInt, removalTetr, 5);
+                }
+            }
+       
+          
+          
 
        }
    }
 
 
-      public static void drawGrid(Graphics g2, int x, int y, int startSide, int sideLength, int holeInt, int[] removalArr){
+     public static void drawGrid(Graphics g2, int x, int y, int startSide, int sideLength, int holeInt, int[] removalArr, int coloringNum){
 
-       for(int xCord = 0; xCord < sideLength; xCord += 1){
+        for(int xCord = 0; xCord < sideLength; xCord += 1){
                for(int yCord = 0; yCord < sideLength; yCord += 1){
 
-
+                
 
                 /*
                 if( ((xCord >= (startSide/sideLength) - (2 * holeInt) - 1) && (xCord <= (startSide/sideLength) - (2 * holeInt) - 1) + (holeInt - 1))
@@ -647,52 +758,29 @@ public class TetrominoAlgol
        }
 
 
-
-       //sets already considered tiles to a white color in order to fulfill the condition that if all is white that it is tiled
+       
+       //sets already considered tiles to a  color in order to tile the nuclear lamina (or in this case, planar lamina)
        for(int i = 0; i < removalArr.length; i += 2){
-          g2.setColor(new Color(255, 255, 255) );
+          
+          if(coloringNum == 1){
+              g2.setColor(new Color(255, 0, 125) );
+           } else if(coloringNum == 2){
+               g2.setColor(new Color(125, 255, 0) );
+            } else if(coloringNum == 3){
+                g2.setColor(new Color(0, 0, 255) );
+            } else if(coloringNum == 4) {
+               g2.setColor(new Color(255, 0, 255) );
+            } else if(coloringNum == 5){
+                g2.setColor(new Color(255, 255, 125) );
+            }
+          
+            
+            
           g2.fillRect(removalArr[i], removalArr[i + 1], startSide/sideLength, startSide/sideLength);
-          g2.setColor(new Color(0, 0, 0) );
-
-        }
-        //------------------------------------------------------
-        //NOTE: CONFIGURATIONS NEED REDUCTIONS
-
-        //CONFIGURATIONS FOR SQUARE(NO REDUCTIONS REQUIRED)
-        for(int xCord = 0; xCord < sideLength; xCord++){
-          for(int yCord = 0; yCord < sideLength; yCord++){
-            squareTetr(g2, xCord, yCord, startSide, sideLength);
-          }
+        
+       
         }
 
-        //CONFIGURATIONS FOR L TETROMINO
-
-        for(int turnFactor = 0; turnFactor <= 7; turnFactor++){
-          for(int xCord = 0; xCord < sideLength; xCord++){
-            for(int yCord = 0; yCord < sideLength; yCord++){
-              LTetr(g2, xCord, yCord, startSide, sideLength, turnFactor);
-            }
-          }
-        }
-
-        //CONFIGURATIONS FOR T-TETROMINO and S TETROMINO
-        for(int turnFactor = 0; turnFactor <= 3; turnFactor++ ){
-          for(int xCord = 0; xCord < sideLength; xCord++){
-            for(int yCord = 0; yCord < sideLength; yCord++){
-              tTetr(g2, xCord, yCord, startSide, sideLength, turnFactor);
-              sTetr(g2, xCord, yCord, startSide, sideLength, turnFactor);
-            }
-          }
-        }
-
-        //CONFIGURATIONS FOR LINE Tetromino
-        for(int turnFactor = 0; turnFactor <= 1; turnFactor++){
-          for(int xCord = 0; xCord < sideLength; xCord++){
-            for(int yCord = 0; yCord < sideLength; yCord++){
-              lineTetr(g2, xCord, yCord, startSide, sideLength, turnFactor);
-            }
-          }
-        }
         //-------------------------------------------------------------------
 
 
@@ -705,11 +793,11 @@ public class TetrominoAlgol
 
 
    }
-
-
+   
+   
    public void mousePressed(MouseEvent e){
-
-    }
+     
+   }
 
 
 

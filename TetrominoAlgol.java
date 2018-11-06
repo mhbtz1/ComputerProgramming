@@ -28,6 +28,8 @@ import java.util.concurrent.TimeUnit;
 * (i.e. a slight variation on the backtracking/constraint satisfaction problem algorithm paradigm with recursion)
 * Since there are different states for the pieces, there will be varying positions of the pieces dependent on the program's state in the recursive call
 
+Uses various forms of the laminin polypeptide for experimentation
+
 //
 */
 

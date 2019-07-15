@@ -2,7 +2,8 @@ Vertices[][] connections = new Vertices[10][10];
 Vertices[][] constantConnections = new Vertices[10][10];
 boolean[][] presses = new boolean[10][10];
 boolean restart = false;
-//computational physics project with modeling the behavior of a two dimensional(and three dimensional) discrete fabric
+
+//computational physics project with modeling the behavior of a two dimensional(and maybe three dimensional) discrete fabric
 //probably should impl SLAM simulation
 
 int startX = 450;
@@ -34,9 +35,9 @@ void oscillatoryMotion(int tempX, int tempY, float dividingFactor, Vertices cons
    
     float xDiff = constantX.xCord + connections[tempX][tempY].xCord;
     float yDiff = constantX.yCord - connections[tempX][tempY].yCord;
-     
-    connections[tempX][tempY].xCord += xDiff; 
-    connections[tempX][tempY].yCord += yDiff;
+    
+    connections[tempX][tempY].xCord += x*2.5; //setting this value to += xDiff will simulate the removal of connections
+    connections[tempX][tempY].yCord += x*2.5; //same thing with += yDiff
     println("X VALUE" + x);
     
   

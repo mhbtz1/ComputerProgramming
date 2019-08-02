@@ -20,18 +20,30 @@ int returnedX = -1, returnedY = -1;
 
 int scoreMultiplier = 1;
 
-int FINAL_SCORE = 15000;
+int FINAL_SCORE = 20000;
+//change FINAL_SCORE to increase difficulty of game(20,000 is probably medium, 15,000 is easy 25,000 is hard (at least for my own standards) )
+
 
 //MECHANICS FOR DIFFERENT COLORS:
+//the effects also do not chain, since that would make the game shorter and less difficult if played optimally.
+
 //RED: will delete the cells that are immediately adjacent to it in the NSWE direction
 //BLUE: will delete the cells that are immedately diagonally adjacent
 //YELLOW: will delete the cells that are a manhattan distance of 1 cell away
 //CYAN: deletes cells that are a Manhattan distance of 2 cells away
 //PINK: will delete cells that are a manhattan distance of 1 cell away if it is also pink
 //BLACK: will decrease multipler by a factor of 1 if your current multiplier is greater than 2
-//WHITE: GENERIC TILE, WILL DO NOTHING
+//WHITE: generic tile, does nothing
 
-//B, N, and M will direct the ball to the left, center, or right and left and right keys will move the paddle/platform
+//B, N, and M will direct the ball to the left, center, or right and left and right keys will move the paddle/platform (you can also hookshot the ball while it is moving)
+
+//lives are lost if you move off the left, right, or top of the screen
+//you will lose if your score is less than the FINAL_SCORE and all tiles are deleted, or livesNum is equal to 0
+//considering each tile's function, there is an optimal style of play which involves maximizing the amount of green tiles hit while minimizing the amount of black tiles hit by utilizing long-range pieces
+//such as the cyan/yellow tiles' 2 and 1 manhattan distances respectively (and the same thing with the red and blue tiles)
+//although for the purpose of removing black tiles, pink tiles are not as good in that they only delete tiles which are pink and are vert/horizontally adjacent, although they
+// can be beneficial if bordering a large amount of cyan/yellow tiles, so that when they are removed, the tiles are exposed.
+
 
 int livesNum = 3;
 int numDelete = 0;
@@ -302,7 +314,7 @@ void recurse(Tile prevTile){
  //these two are generic tiles(are just deleted when the ball goes int their hitbox)
   } else if(prevTile.getColorIndex()  == 6){
     numDelete++;
-    //scoreMultiplier -= (min(scoreMultiplier, 2) == 2 ? 1 : 0);
+    scoreMultiplier -= (min(scoreMultiplier, 2) == 2 ? 1 : 0);
   } else if(prevTile.getColorIndex() == 7){
     numDelete++;
     
@@ -349,7 +361,6 @@ void draw(){
    text("P1'S LIVES: " + livesNum, 100, 780);
   text("SCORE: " + scoreCounter, 1173, 780);
   text("SCORE MULTIPLIER: " + scoreMultiplier, 1173, 760);
-  text("BRICK BREAKER + MINESWEEPER IN PROCESSING 3.5.3", 450, 780);
   
   fill(255,255,0);
    for(int i = 0; i < 20; i++){
@@ -379,18 +390,19 @@ void draw(){
   boolean ret = b.ifContact();
 
   
-  if(b.getY() <= 0){
+  if(b.getY() <= 0 && (b.getX() >= 0 && b.getY() <= 1400)){
     println("Y IS LESS THAN ZERO");
-  } 
- 
-  if(livesNum > 0 && ( (b.getX() < 0 || b.getX() > 1400) || b.getY() <= 0) ){
-    b.setX(p.getX());
-    b.setX(p.getY());
     livesNum--;
-  } else if(livesNum == 0 || scoreCounter >= 20000){
+    b.setX(p.getX());
+    b.setY(p.getY());
+  } else if(livesNum > 0 && ( (b.getX() <= 0 || b.getX() >= 1400) ) ){
+    b.setX(p.getX());
+    b.setY(p.getY());
+    livesNum--;
+  } else if(livesNum == 0 || scoreCounter >= FINAL_SCORE){
      background(255);
      gameDone = true;
-  } else if(numDelete == 500 && scoreCounter <= 20000){
+  } else if(numDelete == 500 && scoreCounter <= FINAL_SCORE){
     background(255);
     gameDone = true;
   }
@@ -521,7 +533,7 @@ public class Ball{
     boolean found = false;
     for(int i = 0; i < access.length; i++){
       for(int j = 0; j < access[0].length; j++){
-        if( (access[i][j] != null) && ( (xCord + 9 >= access[i][j].boundedX() && xCord - 9 <= access[i][j].unboundedX()) && (yCord - 18  >= access[i][j].boundedY() && yCord - 18  <= access[i][j].unboundedY()) )){
+        if( (access[i][j] != null) && ( (xCord + 18 >= access[i][j].boundedX() && xCord - 18 <= access[i][j].unboundedX()) && (yCord - 18  >= access[i][j].boundedY() && yCord - 18  <= access[i][j].unboundedY()) )){
            returnedX = i;
            returnedY = j;
            prevX = i;

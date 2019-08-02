@@ -399,7 +399,9 @@ void draw(){
     b.setX(p.getX());
     b.setY(p.getY());
     livesNum--;
-  } else if(livesNum == 0 || scoreCounter >= FINAL_SCORE){
+  } 
+  
+  if(livesNum == 0 || scoreCounter >= FINAL_SCORE){
      background(255);
      gameDone = true;
   } else if(numDelete == 500 && scoreCounter <= FINAL_SCORE){
@@ -482,6 +484,7 @@ public void keyPressed(){
     gameDone = false;
     scoreCounter = 0;
     scoreMultiplier = 1;
+    numDelete = 0;
     p.setX(670);
     p.setY(730);
     b.setX(730);

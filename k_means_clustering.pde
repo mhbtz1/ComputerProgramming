@@ -1,8 +1,7 @@
 
 
-//K-means clustering algorithm
-//and
-//K-nearest neighbors algorithm
+//K-means clustering algorithm below
+//Support Vector Machine next maybe?
 ArrayList<Point> datapoints = new ArrayList<Point>();
 ArrayList<Point> k_means = new ArrayList<Point>();
 HashMap<Point, ArrayList<Point> > belong_to_point = new HashMap<Point, ArrayList<Point> >();
